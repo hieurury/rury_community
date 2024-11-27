@@ -4,6 +4,7 @@
   "main": "main.js",
   "scripts": {
     "start": "nodemon --inspect src/main.js",
+    "css": "tailwindcss build src/public/css/input.css -o src/public/css/output.css --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -14,7 +15,8 @@
     "express-handlebars": "^8.0.1",
     "mongoose": "^8.8.2",
     "multer": "^1.4.5-lts.1",
-    "rury_community": "file:"
+    "rury_community": "file:",
+    "tailwindcss": "^3.4.15"
   },
   "devDependencies": {
     "morgan": "^1.10.0",
