@@ -553,3 +553,15 @@ video {
 [hidden]:where(:not([hidden="until-found"])) {
   display: none;
 }
+
+.static {
+  position: static;
+}
+
+.flex {
+  display: flex;
+}
+
+.justify-between {
+  justify-content: space-between;
+}

@@ -8,7 +8,8 @@ const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 3000;
 const Route = require('./routes/index');
 
-
+//static file
+app.use(express.static(path.join(__dirname, 'public')))
 //body parser
 //show data from form
 app.use(bodyParser.json());
