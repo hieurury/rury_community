@@ -1,0 +1,142 @@
+<div 
+    class="container fixed top-0 right-0 bottom-0 left-0
+    flex justify-center items-center">
+    <div class="w-3/5">
+        <div class="flex items-center flex-col">
+            <h1 class="text-4xl uppercase tracking-widest font-semibold">Đăng Ký</h1>
+            <form 
+            action="/account/register/post"
+            class="w-2/3 p-12 shadow-md"
+            method="POST">
+                <div class="border-2 my-6 flex items-center focus-within:border-blue-400">
+                    <label class="mx-1 font-semibold" for="name">Name: </label>
+                    <input class="flex-1 py-2 focus:border-none focus:outline-none" type="text" id="name" name="name">
+                </div>
+                <div class="border-2 my-6 flex items-center focus-within:border-blue-400">
+                    <label class="mx-1 font-semibold" for="email">Email: </label>
+                    <input class="flex-1 py-2 focus:border-none focus:outline-none" type="text" id="email" name="email">
+                </div>
+                <div class="border-2 my-6 flex items-center focus-within:border-blue-400">
+                    <label class="mx-1 font-semibold" for="password">Mật Khẩu: </label>
+                    <input class="flex-1 py-2 focus:border-none focus:outline-none" type="password" id="password" name="password">
+                    <div id="password-eye-toggle" class="text-xl pr-1 hover:text-orange-400 hover:cursor-pointer">
+                        <span id="visibility">
+                            <i class="bi bi-eye-fill"></i>
+                        </span>
+                        <span id="unvisibility" class="hidden">
+                            <i class="bi bi-eye-slash-fill"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="border-2 my-6 flex items-center focus-within:border-blue-400">
+                    <label class="mx-1 font-semibold" for="re-password">Nhập Lại Mật Khẩu: </label>
+                    <input class="flex-1 py-2 focus:border-none focus:outline-none" type="password" id="re-password" name="re-password">
+                    <div id="password-eye-toggle" class="text-xl pr-1 hover:text-orange-400 hover:cursor-pointer">
+                        <span id="visibility">
+                            <i class="bi bi-eye-fill"></i>
+                        </span>
+                        <span id="unvisibility" class="hidden">
+                            <i class="bi bi-eye-slash-fill"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <input type="checkbox" id="policy" name="policy">
+                    <label for="policy">Đồng ý với điều khoản và quy chuẩn cộng đồng</label>
+                </div>
+                <button 
+                class="text-xl text-slate-50 bg-green-400 w-full py-1 rounded-sm
+                hover:shadow-md hover:text-slate-50 hover:bg-green-500" 
+                type="submit">Đăng ký</button>
+            </form>
+        </div>
+    </div>
+    <div 
+    class="w-2/5 bg-deep h-full bg-cover shadow-only-left
+    flex flex-col items-center px-4">
+        <a href="/" class="flex flex-col justify-center items-center py-4 mb-6">
+            <div class="w-1/4 rounded-full overflow-hidden shadow-outline-white">
+                <img src="/img/logo.png" alt="">
+            </div>
+            <h1 class="text-2xl text-white">Rury Community</h1>
+
+        </a>
+        <h1 
+        class="text-3xl font-semibold text-slate-100 border-b-2 
+        w-full text-center pb-1"
+        >Đăng kí nhanh với</h1>
+        <ul class="w-full flex flex-col justify-center items-center
+        ">
+            <li class="text-xl w-full text-center text-white tracking-widest
+            flex items-center justify-center bg-slate-700 bg-opacity-70
+            p-1 hover:bg-opacity-100 hover:cursor-pointer transition-all">
+            <a href="" class="w-full flex justify-center items-center">
+                <span class="h-8 w-8">
+                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100%" height="100%" viewBox="0 0 48 48">
+                        <path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"></path><path fill="#FF3D00" d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"></path><path fill="#4CAF50" d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"></path><path fill="#1976D2" d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"></path>
+                    </svg>
+                </span>
+                <span>Google</span>
+            </a>
+            </li>
+            <li class="text-xl w-full text-center text-white tracking-widest
+            flex items-center justify-center bg-slate-700 bg-opacity-70
+            p-1 hover:bg-opacity-100 hover:cursor-pointer transition-all">
+            <a href="" class="w-full flex justify-center items-center">
+                <span class="h-8 w-8">
+                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100%" height="100%" viewBox="0 0 48 48">
+                        <path fill="#039be5" d="M24 5A19 19 0 1 0 24 43A19 19 0 1 0 24 5Z"></path><path fill="#fff" d="M26.572,29.036h4.917l0.772-4.995h-5.69v-2.73c0-2.075,0.678-3.915,2.619-3.915h3.119v-4.359c-0.548-0.074-1.707-0.236-3.897-0.236c-4.573,0-7.254,2.415-7.254,7.917v3.323h-4.701v4.995h4.701v13.729C22.089,42.905,23.032,43,24,43c0.875,0,1.729-0.08,2.572-0.194V29.036z"></path>
+                    </svg>
+                </span>
+                <span>Facebook</span>
+            </a>
+            </li>
+        </ul>
+        <div class="mt-4 text-white">
+            <p>Đã có tài khoản? <a class="text-blue-500" href="/account/login">Đăng nhập</a></p>
+        </div>
+    </div>
+</div>
+
+<script>
+    //toggle password visibility
+    const passwordEyeToggles = document.querySelectorAll('#password-eye-toggle');
+    console.log(passwordEyeToggles);
+    passwordEyeToggles.forEach(toggle => {
+        toggle.addEventListener('click', () => {
+            const visibility = toggle.querySelector('#visibility');
+            const unvisibility = toggle.querySelector('#unvisibility');
+            const passwordInput = toggle.previousElementSibling;
+            if (visibility.classList.contains('hidden')) {
+                visibility.classList.remove('hidden');
+                unvisibility.classList.add('hidden');
+                passwordInput.type = 'password';
+            } else {
+                visibility.classList.add('hidden');
+                unvisibility.classList.remove('hidden');
+                passwordInput.type = 'text';
+            }
+        });
+    });
+
+    //validate form
+    const form = document.querySelector('form');
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = form.querySelector('#name').value;
+        const email = form.querySelector('#email').value;
+        const password = form.querySelector('#password').value;
+        const rePassword = form.querySelector('#re-password').value;
+        const policy = form.querySelector('#policy').checked;
+        const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+        if (!name || !email || !password || !rePassword || !policy) {
+            alert('Vui lòng điền đầy đủ thông tin và đồng ý với điều khoản và quy chuẩn cộng đồng');
+        } else if (password !== rePassword) {
+            alert('Mật khẩu không khớp');
+        } else if(emailRegex.test(email) === false) {
+            alert('Email không hợp lệ');
+        } else {
+            form.submit();
+        }
+    });
+</script>

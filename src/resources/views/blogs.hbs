@@ -1,0 +1,154 @@
+<div class="flex container py-6 ">
+    <div class="w-1/4 flex flex-col shadow-only-right px-6 py-2 sticky h-screen top-0 z-10 overflow-y-auto">
+        <h3 class="text-3xl font-semibold tracking-widest mb-5">Filter</h3>
+        <ul>
+            <li class="px-2 py-1 my-2 cursor-pointer border-b-2 border-slate-400 rounded-md
+                        group hover:bg-black duration-200">
+                <a 
+                class="text-xl tracking-wide w-full h-full block transition-all duration-500
+                group-hover:text-slate-50" 
+                href="/blog/view/latest">Latest</a>
+            </li>
+            <li class="px-2 py-1 my-2 cursor-pointer border-b-2 border-slate-400 rounded-md
+                        group hover:bg-black duration-200">
+                <a 
+                class="text-xl tracking-wide w-full h-full block transition-all duration-500
+                group-hover:text-slate-50" 
+                href="/blog/view/oldest">Oldest</a>
+            </li>
+            <li class="px-2 py-1 my-2 cursor-pointer border-b-2 border-slate-400 rounded-md
+                        group hover:bg-black duration-200">
+                <a 
+                class="text-xl tracking-wide w-full h-full block transition-all duration-500
+                group-hover:text-slate-50" 
+                href="/blog/view/hot">Hot!</a>
+            </li>
+            <li class="">
+                <form class="flex border shadow-sm p-1 bg-slate-800 px-2" action="" method="get">
+                    <input class="flex-1 bg-transparent text-slate-50 border-none focus:outline-none focus:border-none" type="search" name="search" id="blogs-search" placeholder="Enter key....">
+                    <span class="text-xl text-slate-50">
+                        <i class="bi bi-search"></i>
+                    </span>
+                </form>
+            </li>
+        </ul>
+        <div class="flex flex-col mt-3 shadow-only-top shadow-slate-500 sticky overflow-y-auto">
+            <a 
+            class="text-slate-600 text-xl tracking-wide py-1 px-2 bg-lime-100
+                    hover:bg-lime-300 transition-all" 
+            href="/blog/create"
+            >Create blog</a>
+            <a 
+            class="text-slate-600 text-xl tracking-wide py-1 px-2 bg-blue-100
+                    hover:bg-blue-300 transition-all" 
+            href="/account/me/blogs"
+            >My blogs</a>
+        </div>
+    </div>
+    <div class="w-3/4 px-12">
+        {{#if blogs}}
+        <!-- Bài viết -->
+         {{#each blogs}}
+        <div id="wrapper-blog" class="shadow-outline-black shadow-slate-300 p-2 rounded-md my-6">
+            <div class="flex justify-between items-center px-3">
+                <div class="flex items-center mb-3">
+                    <a class="w-14 h-14 overflow-hidden rounded-full" href="#">
+                        <img class="w-full h-full" src="{{this.author.avatar}}" alt="">
+                    </a>
+                    <span class="mx-2 text-xl font-bold">{{this.author.name}}</span>
+                </div>
+                <span class="text-gray-500 font-semibold">{{time this.createdAt}}</span>
+            </div>
+            <div>
+                <p class="text-justify">{{{this.content}}}
+                </p>
+            </div>
+            <div class="flex justify-between px-2 mt-4 pt-2 border-t border-slate-600">
+                <span class="text-xl text-red-600 hover:cursor-pointer hover:opacity-80">
+                    <i class="bi bi-heart-fill"></i>
+                    <span>{{this.like}}</span>
+                </span>
+                <span data-comment-id="{{this._id}}" id="commets-btn" class="text-xl text-blue-500 hover:cursor-pointer hover:opacity-80">
+                    <span>{{count this.comments}}</span>
+                    <i class="bi bi-chat-left-dots-fill"></i>
+                </span>
+            </div>
+
+            <!-- khung bình luận -->
+            
+            <div id="{{this._id}}" class="hidden t-6 max-h-80 overflow-y-auto animate-show-comment custom-scrollbar">
+                <ul>
+                    {{#if comments}}
+                    {{#each comments}}
+                    <li class="flex flex-col my-3">
+                        <div class="flex items-center">
+                            <img class="w-8 h-8 rounded-full" src="{{this.author.avatar}}" alt="">
+                            <span class="text-sm ml-1 font-semibold">{{this.author.name}}</span>
+                        </div>
+                        <div>
+                            <p class="text-sm">{{this.content}}</p>
+                        </div>
+                    </li>
+                    {{/each}}
+                    {{else}}
+                    <li>Chưa có comment nào cả</li>
+                    {{/if}}
+                </ul>
+                <div>
+                    <form action="/blog/comment/{{this._id}}" method="post">
+                        <textarea id="editor-{{@index}}" name="content" placeholder="Viết bình luận..."></textarea>
+                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full" type="submit">Bình luận</button>
+                    </form>
+                </div>
+             </div>
+        </div>
+        {{/each}}
+        {{/if}}
+    </div>
+</div>
+
+<script src="https://cdn.ckeditor.com/ckeditor5/44.0.0/ckeditor5.umd.js"></script>
+<script src="https://cdn.ckbox.io/ckbox/2.4.0/ckbox.js"></script>
+<script>
+    //ẩn hiện khung bình luận
+    const commentsBtns = document.querySelectorAll('#commets-btn');
+
+    commentsBtns.forEach((btn, index) => {
+        const commentId = btn.getAttribute('data-comment-id');
+        const commentWrapper = document.getElementById(commentId);
+        //toggle bình luận
+        btn.addEventListener('click', () => {
+            commentWrapper.style.display = commentWrapper.style.display === 'block' ? 'none' : 'block';
+        });
+    });
+
+    //==== CKEDITOR for comment block====//
+    const {
+        ClassicEditor,
+        Paragraph,
+        Bold,
+        Italic,
+        Font,
+    } = CKEDITOR;
+    const blockCmts = document.querySelectorAll('textarea[id^="editor-"]');
+    blockCmts.forEach((blockCmt, index) => {
+        ClassicEditor
+            .create(blockCmt, {
+                licenseKey: 'eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE3NjU0OTc1OTksImp0aSI6IjBmNzIxYzU0LThkNmItNDc0MS04ODlhLTYyMmYyZjMzMzVkMiIsInVzYWdlRW5kcG9pbnQiOiJodHRwczovL3Byb3h5LWV2ZW50LmNrZWRpdG9yLmNvbSIsImRpc3RyaWJ1dGlvbkNoYW5uZWwiOlsiY2xvdWQiLCJkcnVwYWwiXSwiZmVhdHVyZXMiOlsiRFJVUCIsIkJPWCJdLCJ2YyI6IjBiOGZiN2E1In0.YYmHTgMa8WbTHPqeJQvqpiyg89vuomcBvUJJVWv4k2bdx5ri8lkGwQkJYMjFoW4u5x3uQPzajA62FNA-gWSTIw',
+                plugins: [
+                    Paragraph,
+                    Bold,
+                    Italic,
+                    Font,
+                ],
+                toolbar: ['bold', 'italic', 'fontColor', 'fontBackgroundColor'],
+            })
+            .then(editor => {
+                console.log(editor);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    });
+    
+</script>

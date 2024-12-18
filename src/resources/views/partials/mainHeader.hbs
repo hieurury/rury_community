@@ -1,0 +1,46 @@
+<nav class="flex justify-between items-center px-4 py-2">
+    <a href="/" class="w-16 h-16 rounded-full overflow-hidden shadow-outline-black shadow-gray-400">
+        <img class="w-full" src="/img/logo.png" alt="Rury-community">
+    </a>
+    <ul class="flex">
+        <li class="mx-2 text-xl px-4 py-2 font-semibold">
+            <a href="/news">News</a>
+        </li>
+        <li class="mx-2 text-xl px-4 py-2 font-semibold">
+            <a href="/blog/view">Blogs</a>
+        </li>
+        {{#if user}}
+        <li class="mx-2 text-xl px-4 py-2 font-semibold group relative">
+            <a class="flex items-center" href="/blog/me">
+                <span class="block w-8 h-8 rounded-full overflow-hidden shadow-outline-black shadow-gray-400">
+                    <img class="w-full h-full" src="{{user.avatar}}" alt="">
+                </span>
+                <span>{{user.name}}</span>
+            </a>
+            <ul 
+            class="hidden group-hover:flex absolute bg-white shadow-
+            flex-col shadow-md">
+                <li class="hover:bg-gray-600 text-base my-1">
+                    <a 
+                    class="block w-full px-4 h-full" 
+                    href="/blog/me">My blogs</a>
+                </li>
+                <li class="hover:bg-gray-600 text-base my-1">
+                    <a 
+                    class="block w-full px-4 h-full" 
+                    href="/blog/create">Create blog</a>
+                </li>
+                <li class="hover:bg-gray-600 text-base my-1 border-t border-gray-400">
+                    <a 
+                    class="block w-full px-4 h-full" 
+                    href="/account/logout">Logout</a>
+                </li>
+            </ul>
+        </li>
+        {{else}}
+        <li class="mx-2 text-xl px-4 py-2 font-semibold">
+            <a href="/account/login">Account</a>
+        </li>
+        {{/if}}
+    </ul>
+</nav>

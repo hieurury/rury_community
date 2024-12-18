@@ -1,0 +1,32 @@
+{
+  "name": "rury_community",
+  "version": "1.0.0",
+  "main": "main.js",
+  "scripts": {
+    "build:css": "tailwindcss build src/public/css/tailwind-input.css -o src/public/css/tailwind-output.css --watch",
+    "start": "nodemon --inspect src/main.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^4.21.1",
+    "express-handlebars": "^8.0.1",
+    "express-session": "^1.18.1",
+    "handlebars": "^4.7.8",
+    "jsonwebtoken": "^9.0.2",
+    "moment": "^2.30.1",
+    "mongoose": "^8.8.4",
+    "multer": "^1.4.5-lts.1",
+    "rury_community": "file:",
+    "tailwindcss": "^3.4.16"
+  },
+  "devDependencies": {
+    "cookie-parser": "^1.4.7",
+    "mongoose-slug-generator": "^1.0.4",
+    "morgan": "^1.10.0",
+    "nodemon": "^3.1.7"
+  }
+}

@@ -1,0 +1,130 @@
+<div class="container flex px-4 mt-6">
+    <div class="w-1/2 border-2">
+        <form class="" action="/blog/create/post" method="post">
+            <input 
+                class="text-2xl focus:outline-none focus:border-none w-full
+                        p-2"
+                type="text" name="title" placeholder="Tiêu đề...">
+            <textarea placeholder="Viết dô đây.." name="content" id="editor">
+            </textarea>
+            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full" type="submit">Đăng bài</button>
+        </form>
+    </div>
+    <div class="w-1/2 px-2">
+        <div class="ck ck-reset ck-editor ck-rounded-corners px-2">
+            <h1 class="text-3xl tracking-widest px-4 font-semibold mb-4 border-b-2">Phần xem trước</h1>
+            <h3 id="title-view"
+            class="text-2xl text-slate-600 px-4"></h3>
+            <div id="content-view" 
+            class=" text-wrap px-2 py-4 max-h-96 overflow-y-scroll no-scrollbar"></div>
+        </div>
+    </div>
+</div>
+<!-- ckeditor -->
+<!-- <script src="https://cdn.ckeditor.com/ckeditor5/41.0.0/classic/ckeditor.js"></script> -->
+<script src="https://cdn.ckeditor.com/ckeditor5/44.0.0/ckeditor5.umd.js"></script>
+<script src="https://cdn.ckbox.io/ckbox/2.4.0/ckbox.js"></script>
+
+		<script>
+			const {
+                BlockQuote,
+				ClassicEditor,
+				Essentials,
+				Paragraph,
+				Bold,
+				Italic,
+				Font,
+                Image,
+                ImageUpload,
+                ImageResizeEditing,
+                ImageResizeHandles,
+                ImageResizeButtons,
+                ImageToolbar,
+                ImageStyle,
+                CKFinder,
+                CKFinderUploadAdapter,
+                Link,
+                Alignment
+			} = CKEDITOR;
+			// Create a free account and get <YOUR_LICENSE_KEY>
+			// https://portal.ckeditor.com/checkout?plan=free
+			ClassicEditor
+				.create( document.querySelector( '#editor' ), {
+                    ckfinder: {
+                        uploadUrl: '/blog/upload-image'
+                    },
+					licenseKey: 'eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE3NjU0OTc1OTksImp0aSI6IjBmNzIxYzU0LThkNmItNDc0MS04ODlhLTYyMmYyZjMzMzVkMiIsInVzYWdlRW5kcG9pbnQiOiJodHRwczovL3Byb3h5LWV2ZW50LmNrZWRpdG9yLmNvbSIsImRpc3RyaWJ1dGlvbkNoYW5uZWwiOlsiY2xvdWQiLCJkcnVwYWwiXSwiZmVhdHVyZXMiOlsiRFJVUCIsIkJPWCJdLCJ2YyI6IjBiOGZiN2E1In0.YYmHTgMa8WbTHPqeJQvqpiyg89vuomcBvUJJVWv4k2bdx5ri8lkGwQkJYMjFoW4u5x3uQPzajA62FNA-gWSTIw',
+					plugins: [
+                        //về hình ảnh
+                        Image, 
+                        ImageUpload,
+                        ImageResizeEditing,
+                        ImageResizeHandles,
+                        ImageToolbar,
+                        ImageStyle,
+                        ImageResizeButtons,
+                        CKFinderUploadAdapter,
+                        CKFinder,
+                        Link,
+                        //phần định dạng văn bản 
+                        BlockQuote,
+                        Essentials, 
+                        Paragraph, 
+                        Bold, 
+                        Italic, 
+                        Font,
+                        Alignment
+                    ],
+                    
+					toolbar: [
+                        //về các thao tác
+						'undo', 'redo', '|', 
+                        //về font
+                        'bold', 'italic', '|',
+						'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', '|',
+                        //về text
+                        'alignment:left', 'alignment:center', 'alignment:right', 'alignment:justify', '|',
+                        //về insert
+                        'blockQuote', 'insertTable', 'mediaEmbed', '|',
+                        //về list
+                        'numberedList', 'bulletedList', '|',
+                        //về image
+                        'image', 'imageUpload', 'imageResize', 'imageStyle:full', 'imageStyle:side','|',
+                        'imageTextAlternative', '|',
+                        'imageStyle:alignLeft', 'imageStyle:wrapText'
+                        
+					],
+                    contentsCss: ['/css/main.css'],
+				} )
+				.then( editor => {
+
+                    //chổ này để css nhẹ cho cái UI editor
+					window.editor = editor;
+                    console.log(editor);
+                    editor.ui.view.editable._editableElement.style.height = '384px';
+                    //khi focus thì vẫn giữa 400px
+                    editor.ui.focusTracker.on('change:isFocused', (evt, name, isFocused) => {
+                        editor.ui.view.editable._editableElement.style.height = '384px';
+                    });
+                    //================================================================================================
+                    //quan sát sự thay đổi cuả editor
+                    editor.model.document.on('change:data', () => {
+                        // console.log(editor.getData());
+                        //hiển thị qua giao diện xem trước
+                        const content = document.querySelector('textarea[name="content"]');
+                        const contentView = document.getElementById('content-view');
+                        contentView.innerHTML = editor.getData();
+                    });
+
+                    //thay đổi tiêu đề cho phù hợp
+                    const title = document.querySelector('input[name="title"]');
+                    const titleView = document.getElementById('title-view');
+                    title.addEventListener('input', () => {
+                        titleView.innerHTML = title.value;
+                        document.title = title.value;
+                    });
+				} )
+				.catch( error => {
+					console.error( error );
+				} );
+		</script>
