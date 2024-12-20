@@ -33,8 +33,10 @@
 
             <!-- khung bình luận -->
             
-            <div id="{{this._id}}" class="hidden t-6 max-h-80 overflow-y-auto animate-show-comment custom-scrollbar">
-                <ul class="">
+            <div 
+            id="{{this._id}}" 
+            class="hidden t-6 animate-show-comment">
+                <ul class="max-h-72 overflow-y-auto custom-scrollbar">
                     {{#if this.comments}}
                     {{#each this.comments}}
                     <li class="flex flex-col my-3 px-4">

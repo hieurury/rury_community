@@ -13,6 +13,7 @@ router.use(authenticateToken);
 router.use(localsAccount);
 router.get('/login', accountController.renderLogin);
 router.get('/logout', accountController.logout);
+router.get('/profile', accountController.renderProfile);
 
 
 module.exports = router;

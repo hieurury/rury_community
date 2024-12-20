@@ -52,6 +52,8 @@ app.use(morgan('combined'));
 Route(app);
 //connect to database
 db.connect();
+//update user with blog
+db.updateUsersWithBlogs();
 
 //listen port
 app.listen(PORT, () => {

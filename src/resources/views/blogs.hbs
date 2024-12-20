@@ -76,17 +76,26 @@
 
             <!-- khung bình luận -->
             
-            <div id="{{this._id}}" class="hidden t-6 max-h-80 overflow-y-auto animate-show-comment custom-scrollbar">
-                <ul>
-                    {{#if comments}}
-                    {{#each comments}}
-                    <li class="flex flex-col my-3">
-                        <div class="flex items-center">
-                            <img class="w-8 h-8 rounded-full" src="{{this.author.avatar}}" alt="">
-                            <span class="text-sm ml-1 font-semibold">{{this.author.name}}</span>
+            <div 
+            id="{{this._id}}" 
+            class="hidden t-6
+            animate-show-comment
+            ">
+                <ul class="max-h-72 overflow-y-auto custom-scrollbar">
+                    {{#if this.comments}}
+                    {{#each this.comments}}
+                    <li class="flex flex-col my-3 px-4">
+                        <div class="flex justify-between">
+                            <div class="flex items-center">
+                                <img class="w-8 h-8 rounded-full" src='{{this.author.avatar}}' alt="">
+                                <span class="text-sm ml-1 font-semibold">{{this.author.name}}</span>
+                            </div>
+                            <div class="text-sm ml-2 text-gray-500">
+                                <span>{{time this.createdAt}}</span>
+                            </div>
                         </div>
                         <div>
-                            <p class="text-sm">{{this.content}}</p>
+                            <p class="text-sm">{{{this.content}}}</p>
                         </div>
                     </li>
                     {{/each}}
@@ -94,9 +103,9 @@
                     <li>Chưa có comment nào cả</li>
                     {{/if}}
                 </ul>
-                <div>
+                <div class="mt-12 ">
                     <form action="/blog/comment/{{this._id}}" method="post">
-                        <textarea id="editor-{{@index}}" name="content" placeholder="Viết bình luận..."></textarea>
+                        <textarea id="editor" name="content" placeholder="Viết bình luận..."></textarea>
                         <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full" type="submit">Bình luận</button>
                     </form>
                 </div>
@@ -124,31 +133,27 @@
 
     //==== CKEDITOR for comment block====//
     const {
+        Essentials,
         ClassicEditor,
         Paragraph,
         Bold,
         Italic,
         Font,
     } = CKEDITOR;
-    const blockCmts = document.querySelectorAll('textarea[id^="editor-"]');
-    blockCmts.forEach((blockCmt, index) => {
+    const blockCmts = document.querySelectorAll('textarea#editor');
+    blockCmts.forEach(blockCmt => {
         ClassicEditor
             .create(blockCmt, {
                 licenseKey: 'eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE3NjU0OTc1OTksImp0aSI6IjBmNzIxYzU0LThkNmItNDc0MS04ODlhLTYyMmYyZjMzMzVkMiIsInVzYWdlRW5kcG9pbnQiOiJodHRwczovL3Byb3h5LWV2ZW50LmNrZWRpdG9yLmNvbSIsImRpc3RyaWJ1dGlvbkNoYW5uZWwiOlsiY2xvdWQiLCJkcnVwYWwiXSwiZmVhdHVyZXMiOlsiRFJVUCIsIkJPWCJdLCJ2YyI6IjBiOGZiN2E1In0.YYmHTgMa8WbTHPqeJQvqpiyg89vuomcBvUJJVWv4k2bdx5ri8lkGwQkJYMjFoW4u5x3uQPzajA62FNA-gWSTIw',
-                plugins: [
-                    Paragraph,
-                    Bold,
-                    Italic,
-                    Font,
-                ],
+                plugins: [Essentials, Paragraph, Bold, Italic, Font],
                 toolbar: ['bold', 'italic', 'fontColor', 'fontBackgroundColor'],
             })
             .then(editor => {
-                console.log(editor);
+                console.log('Editor was initialized', editor);
             })
             .catch(error => {
-                console.error(error);
+                console.error(error.stack);
             });
-    });
+    })
     
 </script>

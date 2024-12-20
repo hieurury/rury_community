@@ -7,7 +7,13 @@ class BlogController {
             //lấy ra tất cả các bài viết
             const blogs = await Blog.find({})
                 .populate('author', 'name avatar') //chỉ lấy name và avatar
-                .populate('comments') //lấy ra tất cả các comment
+                .populate({
+                    path: 'comments',
+                    populate: {
+                        path: 'author',
+                        select: 'name avatar'
+                    }
+                }) //lấy ra tất cả các comment
             res.render('blogs', { blogs });
         } catch (error) {
             res.status(400).json({ error: 'error' });

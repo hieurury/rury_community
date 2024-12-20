@@ -69,5 +69,20 @@ class AccountController {
             res.status(500).json({error: error.message});
         }
     }
+
+    //====== PROFILE ======//
+
+    //GET /account/profile
+    async renderProfile(req, res, next) {
+        try {
+            const user = await User.findById(req.user._id);
+            res.render('account/profile', {
+                layout: 'account',
+                user: user,
+            });
+        } catch (error) {
+            res.status(400).json({error: error.message});
+        }
+    }
 }
 module.exports = new AccountController;
