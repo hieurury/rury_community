@@ -75,10 +75,10 @@ class AccountController {
     //GET /account/profile
     async renderProfile(req, res, next) {
         try {
-            const user = await User.findById(req.user._id);
+            const user = await User.findById(req.user._id).populate('blogs');
             res.render('account/profile', {
                 layout: 'account',
-                user: user,
+                dataUser: user,
             });
         } catch (error) {
             res.status(400).json({error: error.message});

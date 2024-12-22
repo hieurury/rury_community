@@ -1,18 +1,88 @@
 <div class="flex container">
-    <div class="w-1/4">
+    <div class="lg:w-1/4">
         <!-- tạm thời chỉ để trưng -->
     </div>
-    <div class="w-1/2">
+    <div class=" lg:w-1/2 shadow-md min-h-screen w-full">
+        {{#if dataUser}}
         <div>
-            <div id="profile-background" class="relative h-58 w-full">
-                <img class="h-full w-full" src="/img/mountain-bg.jpg" alt="">
-                <div id="profile-avatar" class="absolute top-0 left-0 w-1/4 h-1/2">
-                    <img src="/img/default-avatar.png" alt="">
+            <div 
+            id="profile-background" 
+            class="relative h-80 w-full rounded-b-md 
+            overflow-hidden shadow-lg">
+                <img class="h-full w-full object-cover" src="/img/mountain-bg.jpg" alt="">
+                <div 
+                id="profile-avatar" 
+                class="absolute lg:bottom-8 lg:left-12 
+                lg:w-44 lg:h-44 rounded-full shadow-outline-white
+                bottom-6 left-8 w-32 h-32">
+                    <img class="w-full h-full object-cover rounded-full" src="/img/default-avatar.png" alt="">
+                    <span 
+                    class="text-2xl text-slate-50 absolute
+                    lg:bottom-10 lg:-right-20
+                    bottom-6 -right-20">{{dataUser.name}}</span>
                 </div>
             </div>
+            <div class="py-4 px-6">
+                <!-- phần giới thiệu -->
+                <h3
+                class="text-4xl tracking-wide font-semibold">{{dataUser.name}}</h3>
+                <p
+                class="italic text-slate-700">Liên hệ qua: 
+                    <a class="text-orange-400" href="mailto:{{user.email}}">{{dataUser.email}}</a>
+                </p>
+                <!-- phần bio -->
+                <div class="my-6 py-2 border-t border-b border-slate-200">
+                    <h3
+                    class="text-2xl text-slate-700 uppercase">bio</h3>
+                    <p>
+                        {{dataUser.bio}}
+                    </p>
+                </div>
+                <!-- phần nổi bật -->
+                 <div>
+                    <h3
+                    class="text-2xl">Các blog đã đăng tải</h3>
+                    <ul
+                    class="flex flex-wrap">
+                        {{#if dataUser.blogs}}
+                            {{#each dataUser.blogs}}
+                            <li 
+                            class="w-1/2 
+                            px-2 py-2">
+                                <a 
+                                class="w-full h-full flex shadow-md p-4 rounded-md
+                                flex-col" 
+                                href="">
+                                    <h3 class="text-xl text-slate-800">{{this.title}}</h3>
+                                    <div class="text-xs italic text-slate-700 max-h-8 overflow-hidden">{{{this.content}}}</div>
+                                    <div 
+                                    class="flex justify-between py-2
+                                    flex-1 items-end">
+                                        <span class="text-red-600">
+                                            <i class="bi bi-heart-fill"></i>
+                                            <span>{{this.like}}</span>
+                                        </span>
+                                        <span class="text-blue-500">
+                                            <i class="bi bi-chat-left-dots-fill"></i>
+                                            <span>{{count this.comments}}</span>
+                                        </span>
+                                    </div>
+                                </a>
+                            </li>
+                            {{/each}}
+                        {{else}}
+                            <li>Chưa có blog nào</li>
+                        {{/if}}
+
+                    </ul>
+                 </div>
+            </div>
         </div>
+        {{else}}
+        <h3>Có lỗi gì đó đã xảy ra. <a class="text-red-500" href="/">Quay lại trang chủ</a></h3>
+        {{/if}}
     </div>
-    <div class="w-1/4">
+    <div class="lg:w-1/4">
         <!-- tạm thời chỉ để trưng -->
     </div>
 </div>
