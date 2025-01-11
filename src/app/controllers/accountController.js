@@ -84,5 +84,45 @@ class AccountController {
             res.status(400).json({error: error.message});
         }
     }
+    //PUT /account/profile/bg/:src
+    async changeBackground(req, res, next) {
+        try {
+            const user = await User.findById(req.user._id);
+            user.background = decodeURIComponent(req.params.src);
+            await user.save();
+            res.redirect('/account/profile');
+        } catch (error) {
+            res.status(400).json({error: error.message});
+        }
+    }
+    //PUT /account/profile/avatar/:src
+
+    /**
+     * nhớ comment
+     */
+    async changeAvatar(req, res, next) {
+        try {
+            const user = await User.findById(req.user._id);
+            const file = req.file;
+            const path = `/${file.path.split('\\').slice(2).join('/')}`;
+            user.avatar = path;
+            await user.save();
+            res.redirect('/account/profile');
+        } catch (error) {
+            res.status(400).json({error: error.message});
+        }
+    }
+
+    //PUT /account/profile/name-change
+    async nameChange(req, res, next) {
+        try {
+            const user = await User.findById(req.user._id);
+            const nameChangeData = req.body.nameChange;
+            await user.updateOne({name: nameChangeData});
+            res.redirect('/account/profile');
+        } catch (error) {
+            res.status(400).json({error: error.message});
+        }
+    };
 }
 module.exports = new AccountController;

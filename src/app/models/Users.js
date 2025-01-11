@@ -18,6 +18,10 @@ const User = new Schema({
         type: String,
         default: '/img/default-avatar.png'
     },
+    background: {
+        type: String,
+        default: '/img/mountain-bg.jpg'
+    },
     role: {
         type: String,
         enum: ['user', 'admin'],

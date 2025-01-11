@@ -10,6 +10,7 @@ const Route = require('./routes/index');
 const db = require('./config/dbconnect');
 const cookieParser = require('cookie-parser');
 const moment = require('moment');
+const methodOverride = require('method-override');
 
 //static file
 app.use(express.static(path.join(__dirname, 'public')))
@@ -41,6 +42,9 @@ app.engine('hbs', engine({
         time: (timestamp) => {
             return moment(timestamp).fromNow();
         },
+        contain: (a, b) => {
+            return a.includes(b);
+        },
     }
 }))
 app.set('view engine', 'hbs');
@@ -48,6 +52,8 @@ app.set('views', path.join(__dirname, 'resources/views'));
 
 //use morgan to show method HTTP
 app.use(morgan('combined'));
+//use method override
+app.use(methodOverride('_method'));
 //use route
 Route(app);
 //connect to database

@@ -21,6 +21,8 @@ const blogController = require('../app/controllers/blogController');
 
 //chuyên cho blog
 router.get('/view', blogController.view);
+router.get('/view/latest', blogController.viewLatest);
+router.get('/view/oldest', blogController.viewOldest);
 router.get('/create', blogController.create);
 router.post('/create/post', blogController.createPost);
 

@@ -1,7 +1,16 @@
 <div class="flex container">
-    <div class="lg:w-1/4">
-        <!-- tạm thời chỉ để trưng -->
+    <div class="lg:w-1/4 w-0">
+        <!-- layout bên trái và logo -->
+         <a href="/" class="p-2 flex items-center hover:space-x-2 duration-500 ease-in-out">
+            <span class="w-12 h-12 bg-slate-400 
+            rounded-full flex items-center 
+            justify-center text-2xl text-white">
+                <i class="bi bi-house-fill"></i>
+            </span>
+            <span class="text-xl font-semibold">Home</span>
+         </a>
     </div>
+    <!-- layout ở giữa - content profile -->
     <div class=" lg:w-1/2 shadow-md min-h-screen w-full">
         {{#if dataUser}}
         <div>
@@ -9,13 +18,13 @@
             id="profile-background" 
             class="relative h-80 w-full rounded-b-md 
             overflow-hidden shadow-lg">
-                <img class="h-full w-full object-cover" src="/img/mountain-bg.jpg" alt="">
+                <img class="h-full w-full object-cover" src="{{dataUser.background}}" data-current="{{dataUser.background}}" alt="">
                 <div 
                 id="profile-avatar" 
                 class="absolute lg:bottom-8 lg:left-12 
                 lg:w-44 lg:h-44 rounded-full shadow-outline-white
                 bottom-6 left-8 w-32 h-32">
-                    <img class="w-full h-full object-cover rounded-full" src="/img/default-avatar.png" alt="">
+                    <img class="w-full h-full object-cover rounded-full" src="{{dataUser.avatar}}" data-current="{{dataUser.avatar}}" alt="">
                     <span 
                     class="text-2xl text-slate-50 absolute
                     lg:bottom-10 lg:-right-20
@@ -82,7 +91,208 @@
         <h3>Có lỗi gì đó đã xảy ra. <a class="text-red-500" href="/">Quay lại trang chủ</a></h3>
         {{/if}}
     </div>
-    <div class="lg:w-1/4">
+    <!-- layout bên phải - right content -->
+    <div class="lg:w-1/4 w-0">
         <!-- tạm thời chỉ để trưng -->
+         <div id="setting" class="">
+            <div id="setting-btn" 
+            class="flex justify-center items-center 
+            space-x-2 select-none cursor-pointer
+            p-2 
+            hover:bg-slate-800 hover:text-slate-50 ease-linear duration-200">
+                <h3 class="text-2xl uppercase tracking-wider">Setting</h3>
+                <span id="setting-icon-down" class="text-xl font-semibold">
+                    <i class="bi bi-chevron-down"></i>
+                </span>
+                <span id="setting-icon-up" class="text-xl font-semibold hidden">
+                    <i class="bi bi-chevron-up"></i>
+                </span>
+            </div>
+            <ul id="profile-settings" class="h-0 overflow-y-hidden p-2">
+                <li class="flex justify-between items-center my-2 shadow-md p-3 rounded-md flex-1">
+                    <span id="current-name" data-current="{{dataUser.name}}" class="text-xl italic text-slate-800">Name: {{dataUser.name}}</span>
+                    <form id="form-name-change" action="/account/profile/name-change/" method="post" class="flex flex-col">
+                        <input name="nameChange" id="name-change-input" type="text" class="hidden w-full outline-none bg-none mb-2" placeholder="Enter new name"/>
+                        <label id="button-change" for="name-change-input" class="text-slate-100 bg-green-500 px-4 py-1 rounded-md shadow cursor-pointer">Change</label>
+                        <div class="hidden" id="name-change-buttons">
+                            <button type="button" id="name-change-cancel" class="bg-red-600 w-1/2 text-white px-2 py-1 text-center mx-2 rounded-md">Cancel</button>
+                            <button type="submit" class="text-slate-100 bg-green-500 px-2 py-1 text-center mx-2 rounded-md shadow">Submit</button>
+                        </div>
+                    </form>
+                </li>
+                <li class="flex justify-between items-center my-2 shadow-md p-3 rounded-md">
+                    {{#if (contain dataUser.avatar 'default-avatar.png')}}
+                    <span class="text-xl italic text-slate-800">Avatar: Default</span>
+                    {{else}}
+                    <span class="text-xl italic text-slate-800">Avatar: {{dataUser.img}}</span>
+                    {{/if}}
+                    <form 
+                    id="form-avatar-change" 
+                    action="/account/profile/avatar" 
+                    method="POST" 
+                    enctype="multipart/form-data"
+                    class="flex flex-wrap items-center">
+                        <label id="change-input" for="file-avatar" class="text-slate-100 bg-green-500 px-4 py-1 rounded-md shadow cursor-pointer">Change</label>
+                        <input name="avatar-change" id="file-avatar" type="file" class="hidden "/>
+                        <div class="hidden flex-1" id="avatar-change-buttons">
+                            <button type="button" id="avatar-change-cancel" class="text-xl bg-red-600 w-1/2 text-white px-4 py-1 text-center mx-2 rounded-md">Cancel</button>
+                            <button type="submit" class="text-xl text-slate-100 bg-green-500 px-4 py-1 text-center mx-2 rounded-md shadow">Submit</button>
+                        </div>
+                    </form>
+                </li>
+                <li class="mt-4">
+                    <h3 class="shadow-only-bottom p-4 mb-2 text-xl text-center">Background options</h3>
+                    <ul id="bg-options" class="flex flex-wrap">
+                        <li class="w-1/3 cursor-pointer">
+                            <div class="w-full p-1 h-full">
+                                <img class="w-full h-full object-cover rounded-md" src="/img/mountain-bg.jpg" alt="">
+                            </div>
+                        </li>
+                        <li class="w-1/3 cursor-pointer">
+                            <div class="w-full p-1 h-full">
+                                <img class="w-full h-full object-cover rounded-md" src="/img/deep-bg.webp" alt="">
+                            </div>
+                        </li>
+                        <li class="w-1/3 cursor-pointer">
+                            <div class="w-full p-1 h-full">
+                                <img class="w-full h-full object-cover rounded-md scale-105 shadow-outline-black" src="/img/magic-bg.jpg" alt="">
+                            </div>
+                        </li>
+                    </ul>
+                    <form action="" method="POST" id="button-options" class="mt-2 justify-between items-center px-4 hidden">
+                        <button type="button" id="bg-change-cancel" class="text-xl bg-red-600 w-1/2 text-white px-4 py-1 text-center mx-2 rounded-md">Cancel</button>
+                        <button type="submit" id="bg-change-submit" class="w-1/2 text-xl text-slate-100 bg-green-500 px-4 py-1 text-center mx-2 rounded-md shadow">Change</button>
+                    </form>
+                </li>
+            </ul>
+         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function(){
+        //bật tắt setting - toggle setting UI
+        const settingBtn = document.getElementById('setting-btn');
+        const profileSettings = document.getElementById('profile-settings');
+        //lấy ra các icons của bút setting
+        const settingIconDown = document.getElementById('setting-icon-down');
+        const settingIconUp = document.getElementById('setting-icon-up');
+        settingBtn.addEventListener('click', () => {
+            if(profileSettings.style.height === '0px' || profileSettings.style.height === ''){
+                profileSettings.style.height = 'auto';
+                settingBtn.classList.add('bg-slate-800');
+                settingBtn.classList.add('text-slate-50');
+                //chỉnh sửa icons - change icons UI to more inpropriate
+                settingIconDown.classList.add('hidden');
+                settingIconUp.classList.remove('hidden');
+            }else{
+                profileSettings.style.height = '0px';
+                settingBtn.classList.remove('bg-slate-800');
+                settingBtn.classList.remove('text-slate-50');
+                //chỉnh sửa icons - change icons UI to more suitable
+                settingIconDown.classList.remove('hidden');
+                settingIconUp.classList.add('hidden');
+            }
+        });
+
+        //thay đổi background
+        const profileBackgroundImg = document.querySelector('#profile-background img'); //get background element - lấy ra phần background
+        const bgOptions = document.querySelectorAll('#bg-options img'); //lấy ra tất cả các ảnh trong background
+        const formBgChange = document.getElementById('button-options');
+        const bgChangeSubmit = document.getElementById('bg-change-submit'); //get bgchange submit button - lấy ra nút submit
+        const bgChangeCancel = document.getElementById('bg-change-cancel');
+        bgOptions.forEach(bgOption => {
+            bgOption.addEventListener('click', function(){
+                profileBackgroundImg.src = this.src;
+                formBgChange.classList.remove('hidden');
+                formBgChange.classList.add('flex');
+
+                //add class to current background - thêm class vào background hiện tại
+                this.classList.add('scale-105');
+                this.classList.add('shadow-outline-black');
+                bgOptions.forEach(option => {
+                    if(option !== this){
+                        option.classList.remove('scale-105');
+                        option.classList.remove('shadow-outline-black');
+                    }
+                });
+
+                //set action for form - set hành động cho form
+                //mã hoá url để truyền vào form
+                let dataSrc = encodeURIComponent(this.src);
+                formBgChange.action = `/account/profile/bg/${dataSrc}?_method=PUT`;
+            });
+        });
+        //cancel change background - hủy thay đổi background
+        bgChangeCancel.addEventListener('click', function(){
+            const currentBg = profileBackgroundImg.getAttribute('data-current');
+            profileBackgroundImg.src = currentBg;
+            formBgChange.classList.add('hidden');
+            formBgChange.classList.remove('flex');
+
+            //remove class to current background - xóa class của background hiện tại
+            this.classList.add('scale-105');
+                this.classList.add('shadow-outline-black');
+                bgOptions.forEach(option => {
+                    if(option !== this){
+                        option.classList.remove('scale-105');
+                        option.classList.remove('shadow-outline-black');
+                    }
+                });
+        });
+
+        //thay đổi avatar
+        const fileAvatar = document.getElementById('file-avatar');
+        const profileAvatarImg = document.querySelector('#profile-avatar img');
+        const formAvatarChange = document.getElementById('form-avatar-change');
+        const avatarChangeCancel = document.getElementById('avatar-change-cancel');
+        const avatarChangeButtons = document.getElementById('avatar-change-buttons');
+        const changeInput = document.getElementById('change-input');
+        fileAvatar.addEventListener('change', function(){
+            const file = this.files[0];
+            const reader = new FileReader();
+            reader.onload = function(){
+                profileAvatarImg.src = reader.result;
+                avatarChangeButtons.classList.remove('hidden');
+                avatarChangeButtons.classList.add('flex');
+                changeInput.classList.add('hidden');
+
+                //set action for form - set hành động cho form
+                formAvatarChange.action = `/account/profile/avatar?_method=PUT`;
+            }
+            reader.readAsDataURL(file);
+        });
+        avatarChangeCancel.addEventListener('click', function(){
+            profileAvatarImg.src = profileAvatarImg.getAttribute('data-current');
+            avatarChangeButtons.classList.add('hidden');
+            avatarChangeButtons.classList.remove('flex');
+            changeInput.classList.remove('hidden');
+        });
+
+        //thay đổi tên
+        const nameChangeInput = document.getElementById('name-change-input');
+        const buttonChange = document.getElementById('button-change');
+        const currentName = document.getElementById('current-name');
+        const nameChangeButtons = document.getElementById('name-change-buttons');
+        const nameChangeCancel = document.getElementById('name-change-cancel');
+        const formNameChange = document.getElementById('form-name-change');
+        buttonChange.addEventListener('click', function(){
+            nameChangeButtons.classList.remove('hidden');
+            nameChangeButtons.classList.add('flex');
+            buttonChange.classList.add('hidden');
+            nameChangeInput.classList.remove('hidden');
+            currentName.classList.add('hidden');
+
+            //set action for form - set hành động cho form
+            formNameChange.action = `/account/profile/name-change?_method=PUT`;
+
+        });
+        nameChangeCancel.addEventListener('click', function(){
+            nameChangeButtons.classList.add('hidden');
+            nameChangeButtons.classList.remove('flex');
+            buttonChange.classList.remove('hidden');
+            nameChangeInput.classList.add('hidden');
+            currentName.classList.remove('hidden');
+        });
+    });
+</script>

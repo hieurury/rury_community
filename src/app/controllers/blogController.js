@@ -2,6 +2,7 @@ const Blog = require('../models/Blogs');
 const Comment = require('../models/Comments');
 
 class BlogController {
+    //GET: /blog/view
     async view(req, res, next) {
         try {
             //lấy ra tất cả các bài viết
@@ -19,6 +20,48 @@ class BlogController {
             res.status(400).json({ error: 'error' });
         }
     }
+
+    //GET: /blog/view/latest
+    async viewLatest(req, res, next) {
+        try {
+            //lấy ra tất cả các bài viết
+            const blogs = await Blog.find({})
+                .sort({ createdAt: -1 })
+                .populate('author', 'name avatar') //chỉ lấy name và avatar
+                .populate({
+                    path: 'comments',
+                    populate: {
+                        path: 'author',
+                        select: 'name avatar'
+                    }
+                }) //lấy ra tất cả các comment
+            res.render('blogs', { blogs });
+        } catch (error) {
+            res.status(400).json({ error: 'error' });
+        }
+    }
+
+    //GET: /blog/view/oldest
+    async viewOldest(req, res, next) {
+        try {
+            //lấy ra tất cả các bài viết
+            const blogs = await Blog.find({})
+                .sort({ createdAt: 1 })
+                .populate('author', 'name avatar') //chỉ lấy name và avatar
+                .populate({
+                    path: 'comments',
+                    populate: {
+                        path: 'author',
+                        select: 'name avatar'
+                    }
+                }) //lấy ra tất cả các comment
+            res.render('blogs', { blogs });
+        } catch (error) {
+            res.status(400).json({ error: 'error' });
+        }
+    }
+
+    //GET: /blog/create
     create(req, res, next) {
         res.render('blog-create');
     }

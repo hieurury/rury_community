@@ -10,7 +10,7 @@
             <div class="flex justify-between items-center px-3">
                 <div class="flex items-center mb-3">
                     <a class="w-14 h-14 overflow-hidden rounded-full" href="#">
-                        <img class="w-full h-full" src="{{this.author.avatar}}" alt="">
+                        <img class="w-full h-full object-cover" src="{{this.author.avatar}}" alt="">
                     </a>
                     <span class="mx-2 text-xl font-bold">{{this.author.name}}</span>
                 </div>
@@ -42,7 +42,7 @@
                     <li class="flex flex-col my-3 px-4">
                         <div class="flex justify-between">
                             <div class="flex items-center">
-                                <img class="w-8 h-8 rounded-full" src='{{this.author.avatar}}' alt="">
+                                <img class="w-8 h-8 rounded-full object-cover" src='{{this.author.avatar}}' alt="">
                                 <span class="text-sm ml-1 font-semibold">{{this.author.name}}</span>
                             </div>
                             <div class="text-sm ml-2 text-gray-500">
